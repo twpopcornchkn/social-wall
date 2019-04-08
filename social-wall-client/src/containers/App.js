@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
-import Feed from './containers/Feed/Feeds';
+
+import {Provider} from "react-redux";
+import {configStore} from "../store/index";
+
+import Feed from './Feed/Feeds';
 
 class App extends Component {
   render() {
