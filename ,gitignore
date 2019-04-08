@@ -1,0 +1,3 @@
+social-wall-server/node_modules
+social-wall-client/node_modules
+social-wall-server/.env
