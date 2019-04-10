@@ -25,7 +25,7 @@ class Feeds extends Component {
     }
     render(){
         return(
-            <div>
+            <div className="row col-sm-9">
                 <SocialPost posts={this.state.posts}/>
                 <CommentForm/>
             </div>

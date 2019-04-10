@@ -12,10 +12,14 @@ const store = configureStore();
 //if localStorage token existed, then save it in redux 
 if(localStorage.jwtToken){
     setAuthorizationToken(localStorage.jwtToken);
-    
+
     //prevent someone from manually tampering with the kyeof jwtToken in localStorage 
     try{
-      store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
+      store.dispatch(setCurrentUser({
+          profileImageUrl: localStorage.profile, 
+          username: jwtDecode(localStorage.jwtToken).name, 
+          uid: jwtDecode(localStorage.jwtToken).user_id, 
+          email: jwtDecode(localStorage.jwtToken).email }));
     }catch(e){
       store.dispatch(setCurrentUser({}));
     }

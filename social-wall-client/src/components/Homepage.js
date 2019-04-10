@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // import MessageTimeline from "./MessageTimeline";
-import Feed from "../containers/Feed/Feeds";
+import UserHome from "../components/UserHome";
 
 const Homepage = (props) => {
+  
   const { currentUser } = props;
+  console.log(currentUser);
   if (!currentUser.isAuthenticated) {
     return (
       <div className="home-hero">
@@ -16,11 +18,10 @@ const Homepage = (props) => {
       </div>
     );
   }
-  return <Feed/>;
-    {/* <MessageTimeline
+  return <UserHome
             profileImageUrl={currentUser.user.profileImageUrl}
             username={currentUser.user.username}
-          /> */}
+          />;
 
 };
 

@@ -27,7 +27,9 @@ export function getUserInfo(token, userData){
         return new Promise((resolve, reject) => {
             return apiCall("get", process.env.REACT_APP_FIREBASE_BASE + "users.json?auth=" + token + queryParameters)
             .then(res =>{
+                // console.log(Object.values(res)[0]);
                 dispatch(setCurrentUser(Object.values(res)[0]));
+                localStorage.setItem('profile', Object.values(res)[0].profileImageUrl);
                 resolve(); 
             })
             .catch(err => {
@@ -43,6 +45,7 @@ export function saveUserInfo(token, userData){
             return apiCall("post", process.env.REACT_APP_FIREBASE_BASE + "users.json?auth=" + token , userData)
             .then(() =>{
                 dispatch(setCurrentUser(userData));
+                localStorage.setItem('profile', userData.profileImageUrl);
                 resolve(); 
             })
             .catch(err => {
