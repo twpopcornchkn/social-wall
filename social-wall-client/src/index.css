@@ -33,4 +33,25 @@ ul.nav.navbar-nav li {
   margin: 0 0.5rem;
 }
 
+.home-hero {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: -1;
+  background-image: url("./images/eaters-collective-129481-unsplash.jpg");
+  text-align: center;
+  padding: 1rem 1rem 13rem 1rem;
+  background-position: center center;
+  background-size: cover;
+}
+
+.home-hero > h1, h4{
+  text-shadow: 0 0 5px #edeff0;
+}
 

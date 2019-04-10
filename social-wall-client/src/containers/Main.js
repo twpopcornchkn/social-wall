@@ -1,20 +1,19 @@
 import React from 'react';
 import {Switch, Route, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import Feed from './Feed/Feeds';
 import AuthForm from '../components/AuthForm';
 import {authUser} from '../store/actions/auth';
 import {removeError} from '../store/actions/errors';
 import withAuth from "../hoc/withAuth";
 import MessageForm from "../components/MessageForm";
-
+import Homepage from '../components/Homepage';
 
 const Main = (props) =>{
     const {authUser, errors, removeError, currentUser} = props;
     return(
         <div className="container">
             <Switch>
-                <Route exact path="/" render={props => <Feed {...props}/>}/>
+                <Route exact path="/" render={props => <Homepage currentUser={currentUser} {...props}/>}/>
                 <Route exact path="/signin" render={props => {
                     return (
                     <AuthForm
