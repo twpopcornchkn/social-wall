@@ -6,7 +6,7 @@ import UserHome from "../components/UserHome";
 const Homepage = (props) => {
   
   const { currentUser } = props;
-  console.log(currentUser);
+  // console.log(currentUser);
   if (!currentUser.isAuthenticated) {
     return (
       <div className="home-hero">

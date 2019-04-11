@@ -7,7 +7,7 @@ class SocialPost extends Component {
   
     render(){
         const postElements =[];
-        console.log(this.props.posts)
+        // console.log(this.props.posts)
         for(let key in this.props.posts){
             postElements.push({
                 id: key,

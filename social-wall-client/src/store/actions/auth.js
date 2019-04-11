@@ -1,6 +1,8 @@
 import {SET_CURRENT_USER} from "../actionTypes";
 import {apiCall, setTokenHeader} from "../../services/api";
 import {addError, removeError} from "./errors";
+import jwtDecode from "jwt-decode";
+
 
 export function setCurrentUser(user){
     return{
@@ -20,6 +22,14 @@ export function logout(){
       dispatch(setCurrentUser({})); 
     }
   }
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout());
+        }, expirationTime * 1000);
+    };
+};
 
 export function getUserInfo(token, userData){
     let queryParameters =  '&orderBy="uid"&limitToFirst=1&equalTo="' + userData.uid + '"';
@@ -62,7 +72,15 @@ export function authUser(type, userData){
         return new Promise((resolve, reject)=>{
             return apiCall("post", URL+process.env.REACT_APP_FIREBASE_API_KEY, {displayName: userData.username, returnSecureToken: true, ...userData})
             .then(({idToken, ...firebaseUserData}) => {
+
+                //token & expiration to localstorage
                 localStorage.setItem('jwtToken', idToken);
+                const expirationDate = new Date (new Date().getTime() + firebaseUserData.expiresIn * 1000)
+                localStorage.setItem('expirationDate', expirationDate);
+                dispatch(checkAuthTimeout(firebaseUserData.expiresIn));
+
+
+                //save payload to user table  
                 const payload =  {
                     username: firebaseUserData.displayName,
                     uid: firebaseUserData.localId,
@@ -86,3 +104,25 @@ export function authUser(type, userData){
         })
     }
 }
+
+
+//Not asynchronous code but this allow to dispatch multiple actions from within this action
+export const authCheckState = (token) => {
+    return dispatch => {
+        if (!token) {
+            dispatch(logout());
+        } else {
+            const expirationDate = new Date(localStorage.getItem('expirationDate'));
+            if (expirationDate <= new Date()) {
+                dispatch(logout());
+            } else {
+                dispatch(setCurrentUser({
+                    profileImageUrl: localStorage.profile, 
+                    username: jwtDecode(localStorage.jwtToken).name, 
+                    uid: jwtDecode(localStorage.jwtToken).user_id, 
+                    email: jwtDecode(localStorage.jwtToken).email }));
+                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));
+            }   
+        }
+    };
+};
