@@ -14,6 +14,9 @@ class SocialPost extends Component {
                 ...this.props.posts[key]
             })
         }
+        //sort by createdDate descendingly 
+        postElements.sort(function(a, b){return b.createdDate - a.createdDate});
+        
         const Posts = postElements.map(post =>{
             return <CardContent
                     key={post.id} 
