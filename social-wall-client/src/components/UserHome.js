@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Feed from "../containers/Feed/Feeds";
 import UserAside from "./UserAside";
+import MessageForm from "../components/MessageForm";
 
 
 class UserHome extends Component {
@@ -12,7 +13,10 @@ class UserHome extends Component {
                 profileImageUrl={this.props.profileImageUrl}
                 username={this.props.username}
             />
-            <Feed/>
+            <div className="row col-sm-9">
+                <MessageForm/>
+                <Feed/> 
+            </div>  
         </div>
         );
     }

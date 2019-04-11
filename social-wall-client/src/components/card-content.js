@@ -10,16 +10,23 @@ const cardContent = (props) =>{
     return(
     <div className="social-post card mb-3">
         <div className="row no-gutters">
-            <div className="col-md-4">
-            <img src={props.image} className="card-img" alt="..."/>
-            </div>
+            {props.image && (
+                <div className="col-md-4">
+                <img src={props.image} className="card-img" alt="..."/>
+                </div>
+            )}
             <div className="col-md-8">
             <div className="card-body">
                 <h5 className="card-title">
-                <img className="rounded-circle rounded-sm" src={props.profileImg} alt=""/>
+                <img 
+                    className="rounded-circle rounded-sm img-thumbnail" 
+                    src={props.profileImg} 
+                    width="50" 
+                    height="50" 
+                    alt={props.userName}/>
                 {props.userName}</h5>
-                <p className="card-text">{props.body}</p>
-                <CardSub sub={props.subtext}/>
+                <p className="card-text">{props.text}</p>
+                <CardSub createdDate={props.createdDate}/>
                 <CardControl/>
                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#commentLong">
                     Launch demo modal

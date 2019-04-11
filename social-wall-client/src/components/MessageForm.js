@@ -11,23 +11,24 @@ class MessageForm extends Component {
         e.preventDefault();
         this.props.postNewMessage(this.state.message);
         this.setState({message: ""});
-        this.props.history.push("/");
+        // this.props.history.push("/");
     }
 
     render(){
         return(
-            <form onSubmit={this.handNewMessage}>
+            <form onSubmit={this.handNewMessage} style={{width:"100%"}}>
                 {this.props.errors.message && (
                     <div className="alert alert-danger">{this.props.errors.message}</div>
                 )}
-                <input 
-                    type="text"
-                    className="form-control"
-                    value={this.state.message}
-                    onChange={e => this.setState({message: e.target.value})}
-                    />
-                <button type="submit" className="btn btn-sucess">
-                    Add my message!
+                <textarea 
+                    className="form-control" 
+                    rows="3"
+                    placeholder="Whats' happening?" 
+                    onChange={e => this.setState({message: e.target.value})} value={this.state.message}>    
+                </textarea>
+
+                <button type="submit" className="btn btn-success float-right my-2">
+                    Submit
                 </button>
             </form>
 

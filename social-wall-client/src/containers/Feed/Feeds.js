@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import SocialPost from './SocialPost/SocialPost'; 
 import CommentForm from '../../components/comments/commentFrom';
+import {connect} from "react-redux";
+import {fetchMessage} from "../../store/actions/messages";
 
 class Feeds extends Component {
     state ={
@@ -23,14 +25,28 @@ class Feeds extends Component {
               },
         }
     }
+    
+    componentDidMount(){
+        this.props.fetchMessage();
+    }
+
+    
     render(){
+        const { messages, removeMessage, currentUser } = this.props;
         return(
-            <div className="row col-sm-9">
-                <SocialPost posts={this.state.posts}/>
+            <div>
+                <SocialPost posts={messages}/>
                 <CommentForm/>
             </div>
         );
     }
 }
 
-export default Feeds;
+function mapStateToProps(state){
+    return {
+        messages: state.messages,
+        currentUser: state.currentUser.user
+    }
+}
+
+export default connect(mapStateToProps, {fetchMessage})(Feeds);

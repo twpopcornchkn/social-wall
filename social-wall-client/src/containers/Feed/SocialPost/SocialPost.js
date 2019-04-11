@@ -3,12 +3,11 @@ import CardContent from '../../../components/card-content';
 import './SocialPost.css';
 import CommentContainer from '../../CommentContainer/CommentContainer';
 
-class Checkout extends Component {
-    componentDidMount = () =>{
-        // console.log(this.props.posts)
-    }
+class SocialPost extends Component {
+  
     render(){
         const postElements =[];
+        console.log(this.props.posts)
         for(let key in this.props.posts){
             postElements.push({
                 id: key,
@@ -18,11 +17,11 @@ class Checkout extends Component {
         const Posts = postElements.map(post =>{
             return <CardContent
                     key={post.id} 
-                    userName={post.userName}
+                    userName={post.username}
                     image={post.image}
                     profileImg={post.profileImg}
-                    body={post.body}
-                    subtext={post.subtext}/>;
+                    text={post.text}
+                    createdDate={post.createdDate}/>;
         });
 
         return (
@@ -34,4 +33,4 @@ class Checkout extends Component {
     }
 }
 
-export default Checkout;
+export default SocialPost;
