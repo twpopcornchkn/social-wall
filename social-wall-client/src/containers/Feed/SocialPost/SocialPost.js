@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import CardContent from '../../../components/card-content';
 import './SocialPost.css';
-import CommentContainer from '../../CommentContainer/CommentContainer';
 
 class SocialPost extends Component {
   
@@ -27,12 +26,7 @@ class SocialPost extends Component {
                     createdDate={post.createdDate}/>;
         });
 
-        return (
-            <div>
-                {Posts}
-                <CommentContainer/>
-            </div>
-        );
+        return Posts;
     }
 }
 

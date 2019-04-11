@@ -28,9 +28,6 @@ const cardContent = (props) =>{
                 <p className="card-text">{props.text}</p>
                 <CardSub createdDate={props.createdDate}/>
                 <CardControl/>
-                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#commentLong">
-                    Launch demo modal
-                </button>
             </div>
             </div>
         </div>

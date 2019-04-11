@@ -7,7 +7,7 @@ class MessageForm extends Component {
         message: ""
     }
 
-    handNewMessage = e => {
+    handleNewMessage = e => {
         e.preventDefault();
         this.props.postNewMessage(this.state.message);
         this.setState({message: ""});
@@ -16,7 +16,7 @@ class MessageForm extends Component {
 
     render(){
         return(
-            <form onSubmit={this.handNewMessage} style={{width:"100%"}}>
+            <form onSubmit={this.handleNewMessage} style={{width:"100%"}}>
                 {this.props.errors.message && (
                     <div className="alert alert-danger">{this.props.errors.message}</div>
                 )}

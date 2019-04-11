@@ -3,9 +3,8 @@ import {Provider} from "react-redux";
 import {configureStore} from "../store/index";
 import { BrowserRouter as Router } from "react-router-dom";
 import Navbar from "./Navbar";
-import { authCheckState, setAuthorizationToken, setCurrentUser } from '../store/actions/auth';
+import { authCheckState } from '../store/actions/auth';
 import Main from "./Main";
-import jwtDecode from "jwt-decode";
 
 const store = configureStore(); 
 
