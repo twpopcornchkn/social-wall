@@ -8,10 +8,10 @@ const cardContent = (props) =>{
     });
   
     return(
-    <div className="social-post card mb-3">
+    <div className="social-post card">
         <div className="row no-gutters">
             {props.image && (
-                <div className="col-md-4">
+                <div className="col-md-4 p-md-3">
                 <img src={props.image} className="card-img" alt="..."/>
                 </div>
             )}

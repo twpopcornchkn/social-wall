@@ -55,3 +55,8 @@ ul.nav.navbar-nav li {
   text-shadow: 0 0 5px #edeff0;
 }
 
+.social-post:hover{
+  background-color: #EAF8FD;
+  cursor: pointer;
+}
+

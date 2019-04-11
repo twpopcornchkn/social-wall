@@ -2,7 +2,7 @@ import React from 'react';
 import './card-control.css'
 
 const cardControl = (props) =>(
-    <div className="card-control d-flex flex-row ml-4 my-3">
+    <div className="card-control d-flex flex-row">
     <button type="button" className="btn btn-link" data-toggle="modal" data-target="#commentForm" data-whatever="@torontoraptors">
       <i className="far fa-comments"></i> 10
     </button>

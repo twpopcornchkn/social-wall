@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import CardContent from '../../../components/card-content';
-import './SocialPost.css';
 
 class SocialPost extends Component {
   
