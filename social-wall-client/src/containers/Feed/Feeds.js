@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import SocialPost from './SocialPost/SocialPost'; 
-import CommentForm from '../../components/commentFrom';
 import {connect} from "react-redux";
 import {fetchMessage} from "../../store/actions/messages";
+import SinglePost from "./SinglePost";
 
 class Feeds extends Component {
     componentDidMount(){
@@ -14,7 +14,6 @@ class Feeds extends Component {
         return(
             <div>
                 <SocialPost posts={this.props.messages}/>
-                <CommentForm/>
             </div>
         );
     }

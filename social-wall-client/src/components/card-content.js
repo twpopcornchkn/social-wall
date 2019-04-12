@@ -4,7 +4,7 @@ import CardSub from './card-sub';
 
 const cardContent = (props) =>{
     useEffect(() => {
-    //   console.log(props)
+    //   console.log(props.postid)
     });
   
     return(
@@ -17,17 +17,18 @@ const cardContent = (props) =>{
             )}
             <div className="col-md-8">
             <div className="card-body">
-                <h5 className="card-title">
+                <p className="card-title">
                 <img 
                     className="rounded-circle rounded-sm img-thumbnail" 
                     src={props.profileImg} 
                     width="50" 
                     height="50" 
                     alt={props.userName}/>
-                {props.userName}</h5>
+                 <span className="px-1">@{props.userName}</span> 
+                  <CardSub createdDate={props.createdDate}/></p>
                 <p className="card-text">{props.text}</p>
-                <CardSub createdDate={props.createdDate}/>
-                <CardControl/>
+                
+                <CardControl postid={props.postid}/>
             </div>
             </div>
         </div>

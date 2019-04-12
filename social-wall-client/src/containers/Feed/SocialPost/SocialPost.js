@@ -1,8 +1,20 @@
 import React, {Component} from 'react';
 import CardContent from '../../../components/card-content';
+import SinglePost from "../SinglePost";
+import {Modal} from 'react-bootstrap';
+import {loadModal, removeModal} from "../../../store/actions/modal";
+import {connect} from "react-redux";
+
 
 class SocialPost extends Component {
   
+    handleClose = () => {
+        this.props.removeModal();
+    }
+
+    handleShow= () => {
+        this.props.loadModal();
+    }
     render(){
         const postElements =[];
         // console.log(this.props.posts)
@@ -16,17 +28,38 @@ class SocialPost extends Component {
         postElements.sort(function(a, b){return b.createdDate - a.createdDate});
         
         const Posts = postElements.map(post =>{
-            return <CardContent
-                    key={post.id} 
+            return (
+                <article key={post.id}>
+                    <CardContent 
+                    postid={post.id} 
                     userName={post.username}
                     image={post.image}
                     profileImg={post.profileImg}
                     text={post.text}
-                    createdDate={post.createdDate}/>;
+                    createdDate={post.createdDate}/>
+                </article>
+            );
         });
 
-        return Posts;
+        return (
+            <div>
+            {Posts}
+                <Modal show={this.props.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton></Modal.Header>
+                        <Modal.Body>
+                            <SinglePost/>
+                        </Modal.Body>
+                </Modal>
+            </div>
+            
+        );
     }
 }
 
-export default SocialPost;
+function mapStateToProps(state){
+    return {
+        show: state.modal.show
+    }
+}
+
+export default connect(mapStateToProps, {loadModal, removeModal})(SocialPost);
