@@ -6,7 +6,7 @@ import CardContent from '../../components/card-content';
 
 class SinglePost extends Component {
     componentDidMount(){
-        console.log("postid:", this.props.postid);
+        // console.log("postid:", this.props.postid);
     }
 
     render(){

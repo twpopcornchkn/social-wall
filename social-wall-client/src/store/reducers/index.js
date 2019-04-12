@@ -3,12 +3,14 @@ import errors from "./errors";
 import currentUser from "./currentUser";
 import messages from "./messages";
 import modal from "./modal";
+import comments from "./comments";
 
 const rootReducer = combineReducers({
     errors, 
     currentUser,
     messages,
-    modal
+    modal,
+    comments
 });
 
 export default rootReducer;

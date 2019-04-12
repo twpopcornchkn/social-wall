@@ -11,10 +11,6 @@ class SocialPost extends Component {
     handleClose = () => {
         this.props.removeModal();
     }
-
-    handleShow= () => {
-        this.props.loadModal();
-    }
     render(){
         const postElements =[];
         // console.log(this.props.posts)
@@ -45,7 +41,7 @@ class SocialPost extends Component {
             <div>
             {Posts}
                 <Modal show={this.props.show} onHide={this.handleClose}>
-                    <Modal.Header closeButton></Modal.Header>
+                    <Modal.Header closeButton>Comments</Modal.Header>
                         <Modal.Body>
                             <SinglePost posts = {this.props.posts}/>
                         </Modal.Body>
