@@ -7,7 +7,6 @@ export const loadMessages = messages  => ({
     messages
 })
 
-
 export const fetchMessage = () => {
     const token = localStorage.jwtToken;
 

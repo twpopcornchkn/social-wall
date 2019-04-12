@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Comment from "../../components/comments";
 import {connect} from "react-redux";
+import CardContent from '../../components/card-content';
+
 
 class SinglePost extends Component {
     componentDidMount(){
@@ -8,13 +10,19 @@ class SinglePost extends Component {
     }
 
     render(){
+        const onePost = this.props.posts[this.props.postid];
         return(
-            <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">{this.props.postid} Special title treatment</h5>
-              <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <div>
+              <CardContent 
+                    postid={onePost.id} 
+                    userName={onePost.username}
+                    image={onePost.image}
+                    profileImg={onePost.profileImg}
+                    text={onePost.text}
+                    createdDate={onePost.createdDate}/>
+            
+            <Comment postid={onePost.id}/>
             </div>
-        </div>
         );
     }
 }

@@ -47,7 +47,7 @@ class SocialPost extends Component {
                 <Modal show={this.props.show} onHide={this.handleClose}>
                     <Modal.Header closeButton></Modal.Header>
                         <Modal.Body>
-                            <SinglePost/>
+                            <SinglePost posts = {this.props.posts}/>
                         </Modal.Body>
                 </Modal>
             </div>

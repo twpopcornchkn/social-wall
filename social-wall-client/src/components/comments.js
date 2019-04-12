@@ -1,16 +1,25 @@
 import React from 'react';
 
 const comments = (props) =>(
-              
-            <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <div>
+            <div className="card">
+                <div className="card-body">
+                  <p className="card-text">this is a comment</p>
                 </div>
             </div>
-                
+            <div className="card">
+                <div className="card-body">
+                  <p className="card-text">this is a comment</p>
+                </div>
+            </div>
+            <div className="card">
+                <div className="card-body">
+                  <p className="card-text">this is a comment</p>
+                </div>
+            </div>
+    </div>
             );
                 
-                export default comments;
+export default comments;
                 
                 
