@@ -6,6 +6,9 @@ import {loadModal, removeModal} from "../store/actions/modal";
 
 
 class cardControl extends Component {
+  state = {
+    like: Math.floor(Math.random() * 100)
+  }
 
   handleShow= (postid) => {
     this.props.loadModal(postid);
@@ -14,10 +17,12 @@ class cardControl extends Component {
       return(
         <div className="card-control d-flex flex-row">
         <Button type="button" onClick={()=>this.handleShow(this.props.postid)} variant="link">
-          <i className="far fa-comments"></i> 10
+          <i className="far fa-comments"></i>
         </Button>
-        <button className="btn btn-link"><i className="fas fa-retweet"></i> 42</button>
-        <button className="btn btn-link"><i className="far fa-heart"></i> 266</button>
+        <button className="btn btn-link"><i className="fas fa-retweet"></i> </button>
+        <button className="btn btn-link" onClick={(prevState)=>this.setState({like: this.state.like+1})}>
+          <i className="far fa-heart"></i> {this.state.like}
+        </button>
         <button className="btn btn-link"><i className="far fa-envelope"></i></button>         
       </div>
 

@@ -4,7 +4,8 @@ import {postNewMessage} from "../store/actions/messages";
 
 class MessageForm extends Component {
     state = {
-        message: ""
+        message: "",
+        char: 250
     }
 
     handleNewMessage = e => {
@@ -12,6 +13,17 @@ class MessageForm extends Component {
         this.props.postNewMessage(this.state.message);
         this.setState({message: ""});
         // this.props.history.push("/");
+    }
+
+    handleTextChange(e){
+        const maxLength = 250;
+        if(e.target.value.length <= 250){
+            this.setState({
+                message: e.target.value,
+                char: 250 - e.target.value.length
+            });
+        
+        }
     }
 
     render(){
@@ -24,9 +36,10 @@ class MessageForm extends Component {
                     className="form-control" 
                     rows="3"
                     placeholder="Whats' happening?" 
-                    onChange={e => this.setState({message: e.target.value})} value={this.state.message}>    
+                    onChange={e => this.handleTextChange(e)} 
+                    value={this.state.message}>    
                 </textarea>
-
+                <small className="text-muted float-left">{this.state.char} chars remaining</small>
                 <button type="submit" className="btn btn-success float-right my-2">
                     Submit
                 </button>
