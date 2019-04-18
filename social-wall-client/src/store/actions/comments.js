@@ -15,7 +15,7 @@ export const fetchComments = postid => {
     const token = localStorage.jwtToken;
 
     return dispatch => {
-        return apiCall('get', process.env.REACT_APP_FIREBASE_BASE + 'comments.json' + '?auth=' + token + '&orderBy="postid"&equalTo="' + postid + '"')
+        return apiCall('get', process.env.REACT_APP_FIREBASE_BASE + 'comments.json?auth=' + token + '&orderBy="postid"&equalTo="' + postid + '"')
         .then((res)=>{
             dispatch(loadComments(res));
         }).catch(err => {
@@ -41,7 +41,7 @@ export const postNewComment = (postid, text) => (dispatch, getState) => {
         profileImg: localStorage.profile
     }
 
-    return apiCall("post", process.env.REACT_APP_FIREBASE_BASE + `comments.json` + "?auth=" + token , payload)
+    return apiCall("post", process.env.REACT_APP_FIREBASE_BASE + "comments.json?auth=" + token , payload)
       .then(res => {
         dispatch(removeError());
         dispatch(fetchComments(postid));

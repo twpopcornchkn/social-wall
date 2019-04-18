@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {postNewMessage} from "../store/actions/messages";
 
+const TWEET_MAX_LENGTH = 250;
+
 class MessageForm extends Component {
     state = {
         message: "",
@@ -16,8 +18,8 @@ class MessageForm extends Component {
     }
 
     handleTextChange(e){
-        const maxLength = 250;
-        if(e.target.value.length <= 250){
+        
+        if(e.target.value.length <= TWEET_MAX_LENGTH){
             this.setState({
                 message: e.target.value,
                 char: 250 - e.target.value.length

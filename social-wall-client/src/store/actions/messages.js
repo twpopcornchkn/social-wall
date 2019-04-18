@@ -1,6 +1,6 @@
 import {apiCall} from "../../services/api";
 import {addError} from "../actions/errors";
-import {LOAD_MESSAGES, REMOVE_MESSAGE} from "../actionTypes";
+import {LOAD_MESSAGES} from "../actionTypes";
 
 export const loadMessages = messages  => ({
     type: LOAD_MESSAGES,
@@ -11,7 +11,7 @@ export const fetchMessage = () => {
     const token = localStorage.jwtToken;
 
     return dispatch => {
-        return apiCall('get', process.env.REACT_APP_FIREBASE_BASE + 'messages.json' + '?auth=' + token)
+        return apiCall('get', process.env.REACT_APP_FIREBASE_BASE + 'messages.json?auth=' + token)
         .then((res)=>{
             dispatch(loadMessages(res));
         }).catch(err => {
@@ -34,7 +34,7 @@ export const postNewMessage = text => (dispatch, getState) => {
         createdDate: Date.now(),
         profileImg: localStorage.profile
     }
-    return apiCall("post", process.env.REACT_APP_FIREBASE_BASE + `messages.json` + "?auth=" + token , payload)
+    return apiCall("post", process.env.REACT_APP_FIREBASE_BASE + "messages.json?auth=" + token , payload)
       .then(res => {
         dispatch(fetchMessage());
       })

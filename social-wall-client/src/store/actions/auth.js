@@ -1,5 +1,5 @@
-import {SET_CURRENT_USER} from "../actionTypes";
-import {apiCall, setTokenHeader} from "../../services/api";
+import {SET_CURRENT_USER, UPDATE_USER_PROFILE_IMAGE} from "../actionTypes";
+import {apiCall, setTokenHeader, setImgurClientID} from "../../services/api";
 import {addError, removeError} from "./errors";
 import jwtDecode from "jwt-decode";
 
@@ -13,7 +13,11 @@ export function setCurrentUser(user){
 
 export function setAuthorizationToken(token){
     setTokenHeader(token);
-  }
+}
+
+export function setImgurId(id){
+    setImgurClientID(id);
+}
 
 export function logout(){
     return dispatch => {
@@ -21,7 +25,60 @@ export function logout(){
       setAuthorizationToken(false);
       dispatch(setCurrentUser({})); 
     }
-  }
+}
+
+export function setCurrentUserProfile(imgURL){
+    return {
+        type: UPDATE_USER_PROFILE_IMAGE,
+        imgURL
+    }
+}
+
+export function saveProfileImg(data){
+    return dispatch => {
+        return new Promise((resolve, reject) => {
+            setImgurId(process.env.REACT_APP_IMGUR_ID);
+            return apiCall("post", "https://api.imgur.com/3/image", data)
+            .then(res =>{
+                //update profile image for both localstorage & state
+                dispatch(setCurrentUserProfile(res.data.link));
+                localStorage.setItem('profile', res.data.link);
+
+                //create payload
+                let payload = {profileImageUrl: res.data.link}
+
+                dispatch(updateUserInfo("profileImageUrl", payload))
+                dispatch(removeError());
+                resolve(); 
+            })
+            .catch(err => {
+                dispatch(addError(err.message));
+                reject();
+            })
+
+        })
+    }
+}
+
+export const updateUserInfo = (field, data) => {
+    let token = localStorage.jwtToken;
+    let user_key = localStorage.user_key;
+    return dispatch => {
+        return new Promise((resolve, reject) => {
+            return apiCall("patch", process.env.REACT_APP_FIREBASE_BASE + `users/${user_key}/.json?auth=${token}`, data)
+            .then(res =>{
+                // console.log(res);
+                dispatch(removeError());
+                resolve(); 
+            })
+            .catch(err => {
+                dispatch(addError(err.message));
+                reject();
+            })
+
+        })
+    }
+}
 
 export const checkAuthTimeout = (expirationTime) => {
     return dispatch => {
@@ -37,28 +94,38 @@ export function getUserInfo(token, userData){
         return new Promise((resolve, reject) => {
             return apiCall("get", process.env.REACT_APP_FIREBASE_BASE + "users.json?auth=" + token + queryParameters)
             .then(res =>{
-                // console.log(Object.values(res)[0]);
-                dispatch(setCurrentUser(Object.values(res)[0]));
+                let newUserWithKey = {...Object.values(res)[0], user_key: Object.keys(res)[0]};
+                console.log(newUserWithKey);
+                dispatch(setCurrentUser(newUserWithKey));
                 localStorage.setItem('profile', Object.values(res)[0].profileImageUrl);
+                localStorage.setItem('user_key', Object.keys(res)[0]);
+                dispatch(removeError());
                 resolve(); 
             })
             .catch(err => {
+                dispatch(addError(err.message));
                 reject();
             })
 
         })
     }
 }
+
 export function saveUserInfo(token, userData){
     return dispatch => {
         return new Promise((resolve, reject) => {
             return apiCall("post", process.env.REACT_APP_FIREBASE_BASE + "users.json?auth=" + token , userData)
-            .then(() =>{
-                dispatch(setCurrentUser(userData));
+            .then(res =>{
+                let newUserWithKey = {...userData, user_key: Object.values(res)[0]};
+                // console.log(newUserWithKey);
+                dispatch(setCurrentUser(newUserWithKey));
                 localStorage.setItem('profile', userData.profileImageUrl);
+                localStorage.setItem('user_key', Object.values(res)[0]);
+                dispatch(removeError());
                 resolve(); 
             })
             .catch(err => {
+                dispatch(addError(err.message));
                 reject();
             })
 
@@ -71,7 +138,8 @@ export function authUser(type, userData){
     return dispatch => {
         return new Promise((resolve, reject)=>{
             return apiCall("post", URL+process.env.REACT_APP_FIREBASE_API_KEY, {displayName: userData.username, returnSecureToken: true, ...userData})
-            .then(({idToken, ...firebaseUserData}) => {
+            .then(res => {
+                let {idToken, ...firebaseUserData} = res;
 
                 //token & expiration to localstorage
                 localStorage.setItem('jwtToken', idToken);
@@ -118,6 +186,7 @@ export const authCheckState = (token) => {
             } else {
                 dispatch(setCurrentUser({
                     profileImageUrl: localStorage.profile, 
+                    user_key: localStorage.user_key, 
                     username: jwtDecode(localStorage.jwtToken).name, 
                     uid: jwtDecode(localStorage.jwtToken).user_id, 
                     email: jwtDecode(localStorage.jwtToken).email }));
