@@ -34,7 +34,7 @@ export function apiCall(method, path, data){
 export function saveImgToImgur(data){
         return new Promise((resolve, reject) => {
             setImgurClientID(process.env.REACT_APP_IMGUR_ID);
-            return apiCall("post", "https://api.imgur.com/3/image", data)
+            return apiCall("post", process.env.REACT_APP_IMGUR_UPLOAD, data)
             .then(res =>{
                 return resolve(res.data.link); 
             })

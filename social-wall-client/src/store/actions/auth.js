@@ -1,5 +1,5 @@
 import {SET_CURRENT_USER, UPDATE_USER_PROFILE_IMAGE} from "../actionTypes";
-import {apiCall, setTokenHeader, setImgurClientID} from "../../services/api";
+import {apiCall, setTokenHeader, saveImgToImgur} from "../../services/api";
 import {addError, removeError} from "./errors";
 import jwtDecode from "jwt-decode";
 
@@ -13,10 +13,6 @@ export function setCurrentUser(user){
 
 export function setAuthorizationToken(token){
     setTokenHeader(token);
-}
-
-export function setImgurId(id){
-    setImgurClientID(id);
 }
 
 export function logout(){
@@ -37,22 +33,21 @@ export function setCurrentUserProfile(imgURL){
 export function saveProfileImg(data){
     return dispatch => {
         return new Promise((resolve, reject) => {
-            setImgurId(process.env.REACT_APP_IMGUR_ID);
-            return apiCall("post", "https://api.imgur.com/3/image", data)
-            .then(res =>{
+            return saveImgToImgur(data)
+            .then(imgLink =>{
                 //update profile image for both localstorage & state
-                dispatch(setCurrentUserProfile(res.data.link));
-                localStorage.setItem('profile', res.data.link);
+                dispatch(setCurrentUserProfile(imgLink));
+                localStorage.setItem('profile', imgLink);
 
                 //create payload
-                let payload = {profileImageUrl: res.data.link}
+                let payload = {profileImageUrl: imgLink}
 
                 dispatch(updateUserInfo("profileImageUrl", payload))
                 dispatch(removeError());
                 resolve(); 
             })
             .catch(err => {
-                dispatch(addError(err.message));
+                dispatch(addError(err));
                 reject();
             })
 
@@ -95,7 +90,7 @@ export function getUserInfo(token, userData){
             return apiCall("get", process.env.REACT_APP_FIREBASE_BASE + "users.json?auth=" + token + queryParameters)
             .then(res =>{
                 let newUserWithKey = {...Object.values(res)[0], user_key: Object.keys(res)[0]};
-                console.log(newUserWithKey);
+                // console.log(newUserWithKey);
                 dispatch(setCurrentUser(newUserWithKey));
                 localStorage.setItem('profile', Object.values(res)[0].profileImageUrl);
                 localStorage.setItem('user_key', Object.keys(res)[0]);
