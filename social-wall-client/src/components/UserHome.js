@@ -13,11 +13,11 @@ class UserHome extends Component {
                 profileImageUrl={this.props.profileImageUrl}
                 username={this.props.username}
             />
-            <div className="row col-sm-9">
-                <MessageForm/>
-                <Feed/> 
-            </div>  
-        </div>
+                <div className="col-sm-9">
+                    <MessageForm/>
+                    <Feed/> 
+                </div>  
+            </div>
         );
     }
 }

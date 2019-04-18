@@ -30,7 +30,7 @@ class MessageForm extends Component {
 
     render(){
         return(
-            <form onSubmit={this.handleNewMessage} style={{width:"100%"}}>
+            <form onSubmit={this.handleNewMessage} style={{width:"100%"}} className="clearfix">
                 {this.props.errors.message && (
                     <div className="alert alert-danger">{this.props.errors.message}</div>
                 )}
