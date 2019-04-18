@@ -10,7 +10,7 @@ const Homepage = (props) => {
   if (!currentUser.isAuthenticated) {
     return (
       <div className="home-hero">
-        <h1 className="text-primary font-weight-bold">What's Happening?</h1>
+        <h1 className="text-primary font-weight-bold">How hungry are you?</h1>
         <h4>New to Drumstick?</h4>
         <Link to="/signup" className="btn btn-primary">
           Sign up here
