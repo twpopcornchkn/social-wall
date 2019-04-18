@@ -10,23 +10,22 @@ const cardContent = (props) =>{
     return(
     <div className="social-post card">
         <div className="row no-gutters">
-            {props.image && (
-                <div className="col-md-4 p-md-3">
-                <img src={props.image} className="card-img" alt="..."/>
+            <div className="col-md-2">
+                <div className="small-avatar mx-auto mt-3">
+                        <div  style={{backgroundImage: `url("${props.profileImg}")`}}></div>
                 </div>
-            )}
+            </div>
             <div className="col-md-8">
             <div className="card-body">
-                <p className="card-title">
-                <img 
-                    className="rounded-circle rounded-sm img-thumbnail" 
-                    src={props.profileImg} 
-                    width="50" 
-                    height="50" 
-                    alt={props.userName}/>
-                 <span className="px-1">@{props.userName}</span> 
-                  <CardSub createdDate={props.createdDate}/></p>
+                <div className="card-title">
+                    <span className="px-1">@{props.userName}</span> 
+                     <CardSub createdDate={props.createdDate}/>
+                </div>
                 <p className="card-text">{props.text}</p>
+                {props.image && (
+                    <img src={props.image} className="card-img" alt="..."/>
+                   
+                )}
                 
                 <CardControl postid={props.postid}/>
             </div>
